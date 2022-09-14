@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Title         : 0led_host Sample IP for PULP-Training IP Integration Exercise
+// Title         : Oled_host Sample IP for PULP-Training IP Integration Exercise
 //-----------------------------------------------------------------------------
 // File          : oled.sv
 // Author        : Parng
@@ -28,22 +28,14 @@ module spi_host
      input logic                            send_start_i,
      input logic [7:0]                      send_data_i,
      output                                 send_ready_o,
-     output            if (!rst_n)if (!rst_n)
-      data_out_valid <= 1'b0;
-    else
-      data_out_valid <= 1'b0;
-    else                     nCS_o,
+     output                                 nCS_o,
      output                                 SDO_o,
      output                                 SCLK_o
      );
     localparam  IDLE   = 0,
                 SEND   = 1,
                 HOLDCS = 2,
-                HOLD  if (!rst_n)
-      dif (!rst_n)
-      data_out_valid <= 1'b0;
-    elseata_out_valid <= 1'b0;
-    else = 3;
+                HOLD   = 3;
     localparam  COUNTER_MID = 4,
                 COUNTER_MAX = 9,
                 SCLK_DUTY = 5;
@@ -54,9 +46,7 @@ module spi_host
     logic         temp_sdo;
     
     assign SCLK_o = (counter < SCLK_DUTY) | nCS_o;
-    if (!rst_n)
-      data_out_valid <= 1'b0;
-    elseassign SDO_o = temp_sdo | nCS_o | (state_e == HOLDCS ? 1'b1 : 1'b0);
+    assign SDO_o = temp_sdo | nCS_o | (state_e == HOLDCS ? 1'b1 : 1'b0);
     assign nCS_o = (state_e != SEND && state_e != HOLDCS) ? 1'b1 : 1'b0;	//nCs is active low
     assign send_ready_o = (state_e == IDLE && send_start_i == 1'b0) ? 1'b1 : 1'b0;
 
