@@ -1,64 +1,23 @@
 {
-    name: "wide_alu",
+    name: "oled_host",
     clock_primary: "clk_i",
     reset_primary: "rst_ni",
     bus_device: "reg",
     bus_host: "",
 
-    regwidth: "32",
+    regwidth: "8",
     registers: [
-        { multireg:
-          { name: "OP_A",
-            desc: "Subword of Operand A.",
-            count: "8",
-            cname: "OP_A",
-            swaccess: "wo",
-            fields: [
-                { bits: "31:0"
-                }
-            ],
-          }
-        },
-        { multireg:
-          { name: "OP_B",
-            desc: "Subword of Operand B.",
-            count: "8",
-            cname: "OP_B",
-            swaccess: "wo",
-            fields: [
-                { bits: "31:0"
-                }
-            ],
-          }
-        },
-        { multireg:
-          { name: "RESULT",
-            desc: "Subword of results.",
-            count: "16",
-            cname: "RESULT",
-            swaccess: "ro",
-            hwaccess: "hwo",
-            hwext: "true",
-            fields: [
-                { bits: "31:0"
-                }
-            ],
-          }
-        },
-        { name: "CTRL1",
-          desc: "Controls clear and trigger signal of the deaccelerator.",
+        { name: "COMD",
+          desc: "Controls send_start signal of the OLED Host.",
           swaccess: "wo",
           hwaccess: "hro",
-          hwext: "true",
+          hwsend_start_iext: "true",
           fields: [
-              { bits: "0", name: "TRIGGER",
+              { bits: "0", name: "SEND_START",
                 desc: "Trigger operation on rising edge."
               }
-              { bits: "1", name: "CLEAR_ERR",
-                desc: "Clear a pending ERROR in the deaccelerator."
-              }
           ]
-        },
+        },send_start_i
         { name: "CTRL2",
           desc: "Configures the operation and its delay within the deaccelerator.",
           swaccess: "rw",
