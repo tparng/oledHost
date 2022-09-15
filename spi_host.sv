@@ -47,8 +47,8 @@ module spi_host
     
     assign SCLK_o = (counter < SCLK_DUTY) | nCS_o;
     assign SDO_o = temp_sdo | nCS_o | (state_e == HOLDCS ? 1'b1 : 1'b0);
-    assign nCS_o = (state_e != SEND && state_e != HOLDCS) ? 1'b1 : 1'b0;	//nCs is active low
-    assign send_ready_o = (state_e == IDLE && send_start_i == 1'b0) ? 1'b1 : 1'b0;
+    assign nCS_o = ((state_e != SEND && state_e != HOLDCS) ? 1'b1 : 1'b0) | !rst_ni;	//nCs is active low
+    assign send_ready_o = ((state_e == IDLE && send_start_i == 1'b0) ? 1'b1 : 1'b0) & rst_ni;
 
     always_ff@(posedge clk_i, negedge rst_ni)
         if (!rst_ni)
