@@ -81,7 +81,7 @@ module spi_host
             if (counter == COUNTER_MAX)
                 counter <= 0;
             else
-                counter <= counter + 1'b1;
+                counter <= counter + 1'b1;send_start_i
         end else
             counter <= 'b0;
     
